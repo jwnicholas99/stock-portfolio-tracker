@@ -5,6 +5,7 @@ module.exports = {
         'react/react-in-jsx-scope': 'off',
         indent: ['error', 4],
         'react/jsx-indent': ['error', 4],
+        'object-curly-newline': 'off',
     },
     env: {
         browser: true,

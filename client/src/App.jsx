@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Transaction from './Components/Transaction';
+
 function App() {
     // const [stocks, setStocks] = useState([]);
     const transactions = [
@@ -78,14 +80,8 @@ function App() {
                     <th>Total Cost</th>
                 </tr>
 
-                {transactions.map((transaction) => (
-                    <tr>
-                        <td>{transaction.date}</td>
-                        <td>{transaction.ticker}</td>
-                        <td>{transaction.price}</td>
-                        <td>{transaction.units}</td>
-                        <td>{transaction.price * transaction.units}</td>
-                    </tr>
+                {transactions.map(({ date, ticker, price, units }) => (
+                    <Transaction date={date} ticker={ticker} price={price} units={units} />
                 ))}
             </table>
 
