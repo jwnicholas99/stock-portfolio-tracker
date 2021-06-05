@@ -1,11 +1,13 @@
 import React from 'react';
 
 import Transaction from './Components/Transaction';
+import Stock from './Components/Stock';
 
 function App() {
     // const [stocks, setStocks] = useState([]);
     const transactions = [
         {
+            id: 1,
             date: '15 Jan 2021',
             ticker: 'RBLX',
             units: 5.0,
@@ -13,6 +15,7 @@ function App() {
             fees: 0.35,
         },
         {
+            id: 2,
             date: '18 Jan 2021',
             ticker: 'APPL',
             units: 5.0,
@@ -20,6 +23,7 @@ function App() {
             fees: 0.35,
         },
         {
+            id: 3,
             date: '29 Feb 2021',
             ticker: 'RBLX',
             units: 3.0,
@@ -27,6 +31,7 @@ function App() {
             fees: 0.35,
         },
         {
+            id: 4,
             date: '7 Mar 2021',
             ticker: 'APPL',
             units: 8.0,
@@ -72,40 +77,49 @@ function App() {
             <h2>Stock Portfolio Tracker</h2>
             <h3>Transactions</h3>
             <table>
-                <tr>
-                    <th>Date</th>
-                    <th>Stock Ticker</th>
-                    <th>Price</th>
-                    <th>Units</th>
-                    <th>Total Cost</th>
-                </tr>
+                <tbody>
+                    <tr>
+                        <th>Date</th>
+                        <th>Stock Ticker</th>
+                        <th>Price</th>
+                        <th>Units</th>
+                        <th>Total Cost</th>
+                    </tr>
 
-                {transactions.map(({ date, ticker, price, units }) => (
-                    <Transaction date={date} ticker={ticker} price={price} units={units} />
+                    {transactions.map(({ id, date, ticker, price, units }) => (
+                        <Transaction
+                          key={id}
+                          date={date}
+                          ticker={ticker}
+                          price={price}
+                          units={units}
+                        />
                 ))}
+                </tbody>
             </table>
 
             <h3>Portfolio</h3>
             <table>
-                <tr>
-                    <th>Stock Ticker</th>
-                    <th>Yahoo Price</th>
-                    <th>Units</th>
-                    <th>Cost</th>
-                    <th>Cost Per Unit</th>
-                    <th>Unrealized Gain/Loss</th>
-                </tr>
-
-                {stockArr.map((stock) => (
+                <tbody>
                     <tr>
-                        <td>{stock.ticker}</td>
-                        <td>{stock.price}</td>
-                        <td>{stock.units}</td>
-                        <td>{stock.cost}</td>
-                        <td>{stock.cost / stock.units}</td>
-                        <td>{stock.price * stock.units - stock.cost}</td>
+                        <th>Stock Ticker</th>
+                        <th>Yahoo Price</th>
+                        <th>Units</th>
+                        <th>Cost</th>
+                        <th>Cost Per Unit</th>
+                        <th>Unrealized Gain/Loss</th>
                     </tr>
+
+                    {stockArr.map((stock) => (
+                        <Stock
+                          key={stock.ticker}
+                          ticker={stock.ticker}
+                          price={stock.price}
+                          units={stock.units}
+                          cost={stock.cost}
+                        />
                 ))}
+                </tbody>
             </table>
         </div>
     );
