@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Transaction from './Components/Transaction';
 import Stock from './Components/Stock';
+import Form from './Components/Form';
 
 function App() {
-    // const [stocks, setStocks] = useState([]);
-    const transactions = [
+    const [transactions, setTransactions] = useState([
         {
             id: 1,
             date: '15 Jan 2021',
@@ -38,7 +38,7 @@ function App() {
             price: 215,
             fees: 0.35,
         },
-    ];
+    ]);
 
     let stocks = {};
     transactions.forEach(({
@@ -72,9 +72,18 @@ function App() {
         stockArr = stockArr.concat({ ...v, ticker: k });
     }
 
+    const addTransaction = (transaction) => {
+        setTransactions(transactions.concat({
+            ...transaction,
+            id: transactions.length + 1,
+        }));
+    };
+
     return (
         <div>
             <h2>Stock Portfolio Tracker</h2>
+            <h3>Add Your Transactions</h3>
+            <Form addTransaction={addTransaction} />
             <h3>Transactions</h3>
             <table>
                 <tbody>
@@ -83,16 +92,18 @@ function App() {
                         <th>Stock Ticker</th>
                         <th>Price</th>
                         <th>Units</th>
+                        <th>Fees</th>
                         <th>Total Cost</th>
                     </tr>
 
-                    {transactions.map(({ id, date, ticker, price, units }) => (
+                    {transactions.map(({ id, date, ticker, price, units, fees }) => (
                         <Transaction
                           key={id}
                           date={date}
                           ticker={ticker}
                           price={price}
                           units={units}
+                          fees={fees}
                         />
                 ))}
                 </tbody>
