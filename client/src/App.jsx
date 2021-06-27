@@ -1,44 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Transaction from './Components/Transaction';
 import Stock from './Components/Stock';
 import Form from './Components/Form';
 
+import transactionService from './Services/transactions';
+
 function App() {
-    const [transactions, setTransactions] = useState([
-        {
-            id: 1,
-            date: '15 Jan 2021',
-            ticker: 'RBLX',
-            units: 5.0,
-            price: 70,
-            fees: 0.35,
-        },
-        {
-            id: 2,
-            date: '18 Jan 2021',
-            ticker: 'APPL',
-            units: 5.0,
-            price: 200,
-            fees: 0.35,
-        },
-        {
-            id: 3,
-            date: '29 Feb 2021',
-            ticker: 'RBLX',
-            units: 3.0,
-            price: 68,
-            fees: 0.35,
-        },
-        {
-            id: 4,
-            date: '7 Mar 2021',
-            ticker: 'APPL',
-            units: 8.0,
-            price: 215,
-            fees: 0.35,
-        },
-    ]);
+    const [transactions, setTransactions] = useState([]);
+
+    useEffect(() => {
+        transactionService
+            .getAll()
+            .then((initialTransactions) => setTransactions(initialTransactions));
+    });
 
     let stocks = {};
     transactions.forEach(({
@@ -73,10 +48,11 @@ function App() {
     }
 
     const addTransaction = (transaction) => {
-        setTransactions(transactions.concat({
-            ...transaction,
-            id: transactions.length + 1,
-        }));
+        transactionService.create(transaction);
+    };
+
+    const deleteTransaction = (id) => {
+        transactionService.remove(id);
     };
 
     return (
@@ -94,16 +70,19 @@ function App() {
                         <th>Units</th>
                         <th>Fees</th>
                         <th>Total Cost</th>
+                        <th>Delete</th>
                     </tr>
 
                     {transactions.map(({ id, date, ticker, price, units, fees }) => (
                         <Transaction
                           key={id}
+                          id={id}
                           date={date}
                           ticker={ticker}
                           price={price}
                           units={units}
                           fees={fees}
+                          deleteTransaction={deleteTransaction}
                         />
                 ))}
                 </tbody>

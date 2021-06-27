@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const config = require('./utils/config');
 
 // Import routers and middleware
+const transactionsRouter = require('./controllers/transactions');
 
 const logger = require('./utils/logger');
 
@@ -24,9 +25,10 @@ mongoose.connect(config.MONGODB_URI, {
 
 const app = express();
 app.use(express.json());
-app.use(express.static('client/build'));
+app.use(express.static('../client/build'));
 app.use(cors());
 
 // Use routers and middleware
+app.use('/api/transactions', transactionsRouter);
 
 module.exports = app;

@@ -1,0 +1,10 @@
+POST http://localhost:3003/api/transactions
+content-type: application/json
+
+{
+    "date": "26 Mar 2020",
+    "ticker": "RBLX",
+    "price": 95.6,
+    "units": 100,
+    "fees": 3
+}
